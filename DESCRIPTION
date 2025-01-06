@@ -7,7 +7,10 @@ Authors@R: c(
       "Barney", "Ricca",
       email = "barneyricca@gmail.com",
       role = c("aut", "cre")
-    )
+    ),
+    person(
+      "Jonathan", "Butner",
+      role = c("cre"))
   )
 Description: Several functions that make the analysis of nonlinear time series
     data are included here.
@@ -21,3 +24,5 @@ Config/testthat/edition: 3
 Imports: 
     lme4,
     Matrix
+URL: https://github.com/barneyricca/NDSWorkshop
+BugReports: https://github.com/barneyricca/NDSWorkshop/issues

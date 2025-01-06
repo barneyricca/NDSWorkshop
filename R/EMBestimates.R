@@ -19,6 +19,8 @@ EMBestimates <- function(DataM,             # Data sequence
                          maxorder=2,        # "2" for 2nd derivative
                          dt=NA,             # If all time intervals equal
                          TimeM=NA) {        # Times of data
+  # This function is actually Jon Butner's modification of Pascal Deboeck's
+  #  work, cleaned up a bit by BPR for use here.
   require(lme4)
   require(Matrix)
 
