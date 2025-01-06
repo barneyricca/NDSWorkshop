@@ -21,8 +21,6 @@ EMBestimates <- function(DataM,             # Data sequence
                          TimeM=NA) {        # Times of data
   # This function is actually Jon Butner's modification of Pascal Deboeck's
   #  work, cleaned up a bit by BPR for use here.
-  require(lme4)
-  require(Matrix)
 
   #____________________________________________________
   #Input checks
@@ -77,10 +75,17 @@ EMBestimates <- function(DataM,             # Data sequence
     data=LongData)
 
   ids <- as.numeric(rownames(coef(Model)$uniqueid))
-  # THe next is from package::Matrix. How to do those?
-  ids <- cbind(ids%/%uIDcreate,ids%%uIDcreate)
+  #
+  # The next was originally from package::Matrix. Must it be?
+  # The form that should be used would be (I think!):
+  #  Matrix::`.__T__%/%:base`
+  #  Matrix::`.__T__%%:base`
+  #
+  # usethis::check() gives a Note about this that I haven't figure out.
+  ids <- cbind(ids %/% uIDcreate,
+               ids %% uIDcreate)
 
-  return(list(		Model=Model,
+    return(list(		Model=Model,
                 Derivatives=coef(Model)$uniqueid,
                 nrow=ids[,1],ncol=ids[,2]))
 }

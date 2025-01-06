@@ -1,19 +1,22 @@
 Package: NDSWorkshop
 Type: Package
-Title: Functions for use in the Introduction to NDS workshop
+Title: Nonlinear Data Analysis Functions
 Version: 0.1.0
 Authors@R: c(
     person(
       "Barney", "Ricca",
       email = "barneyricca@gmail.com",
-      role = c("aut", "cre")
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-6318-1222")
     ),
     person(
       "Jonathan", "Butner",
-      role = c("cre"))
+      role = c("aut"))
   )
 Description: Several functions that make the analysis of nonlinear time series
-    data are included here.
+    data are included here. These are for use specifically in the Instats
+    Introduction to Nonlinear Dynamical Systems (NDS) workshop, although they
+    may find use elsewhere.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,7 +25,16 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
+    deSolve,
+    doremi,
+    dplyr,
+    energy,
+    ggplot2,
     lme4,
-    Matrix
+    magrittr,
+    mgcv,
+    rlang,
+    stats,
+    tidyr
 URL: https://github.com/barneyricca/NDSWorkshop
 BugReports: https://github.com/barneyricca/NDSWorkshop/issues
