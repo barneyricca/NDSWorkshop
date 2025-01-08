@@ -19,7 +19,8 @@ ode_fit(
 \item{df}{A data frame of data to fit. The first column must contain the
 times.}
 
-\item{user_func}{The ODE function}
+\item{user_func}{The ODE function. Must correspond to the requirements
+of the deSolve::ode() function.}
 
 \item{parm_init}{Initial coefficient estimates}
 

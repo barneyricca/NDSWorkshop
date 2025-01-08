@@ -2,7 +2,8 @@
 #'
 #' @param df A data frame of data to fit. The first column must contain the
 #'     times.
-#' @param user_func The ODE function
+#' @param user_func The ODE function. Must correspond to the requirements
+#'     of the deSolve::ode() function.
 #' @param parm_init Initial coefficient estimates
 #' @param parm_names The parameter names. These must match those used in
 #'     user_func, but do not need to match the column names of df.
@@ -18,6 +19,44 @@
 #'
 #'
 #'
+
+## For testing:
+# read.csv("../Data/Lynx and Hare.csv") -> lh_df
+# lh_df -> df
+#
+# mahaffy <- function(t,
+#                     y,
+#                     parameters) {
+#   y[1] -> Hare                              # This is a bit awkward, but it is
+#   y[2] -> Lynx                              #  safer and works better with
+#   parameters[1] -> b_H                      #  package phaseR.
+#   parameters[2] -> d_H                      # Make sure these names match the
+#   parameters[3] -> d_L                      #  data and initial parameter
+#   parameters[4] -> b_L                      #  names.
+#
+#   b_H * Hare - d_H * Hare * Lynx ->         # dHare is the Hare velocity
+#     dHare
+#   - d_L * Lynx + b_L * Hare * Lynx ->       # dLynx is the Lynx velocity
+#     dLynx
+#   return(list(c(dHare, dLynx)))
+# }
+# mahaffy -> user_func
+#
+#
+# c(b_H = 0.5,                                # These were reported by Mahaffy
+#   d_H = 0.02,                               #  and make good starters.
+#   d_L= 0.9,
+#   b_L= 0.03) ->
+#   m_parm
+# m_parm -> parm_init
+# names(m_parm) -> parm_names
+#
+# init_step_size = 0.05
+# max_iter = 1000
+# rtol = 1e-3
+# tol = 1e-1
+#
+
 ode_fit <- function(df,                     # Data to fit. 1st column must be
                                             #  the time variable!
                     user_func,              # ode function
@@ -234,18 +273,18 @@ cat(paste("Iterations:", iterations, '\n'))
       iterations
   }
 
+##### Fix this return. Must calculate the "PredictedData"
+
   list("Parameters" = current_parm,
        "Iterations" = iterations,
        "RMSE" = rmse_vec[rmse_min],
-       "PredictedData" = as.data.frame(
-         matrix(c(df[,1],   # Correct
-                  ode_mat[(nrow(df) + 1):nrow(ode_mat),
-                          rmse_min]),
-                nrow = nrow(df),
-                ncol = ncol(df),
-                byrow = FALSE))) ->
+       "Step" = current_step_size,
+       "PredictedData" =
+         data.frame("time" = df[,1],
+                    "x" = ode_ls[[rmse_min]][,2],
+                    "y" = ode_ls[[rmse_min]][,3])) ->
     fit_ls
-  c("Time", names(init_data)) ->
+  colnames(df) ->
     colnames(fit_ls$PredictedData)
 
   return(fit_ls)
