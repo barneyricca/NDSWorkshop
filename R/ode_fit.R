@@ -120,10 +120,6 @@ ode_fit <- function(df,                     # Data to fit. 1st column must be
 
   while(continue == TRUE) {
 
-if(iterations %% 10 == 0) {
-cat(paste("Iterations:", iterations, '\n'))
-}
-
     list() ->
       grid_ls
     for(index in 1:length(current_parm)) {
@@ -267,7 +263,7 @@ cat(paste("Iterations:", iterations, '\n'))
     if(iterations >= max_iter) {               # Stop if too long
       FALSE -> continue
     }
-    cat(paste("RMSE", rmse_current, '\n'))
+#    cat(paste("RMSE", rmse_current, '\n'))
 
     iterations + 1 ->
       iterations
